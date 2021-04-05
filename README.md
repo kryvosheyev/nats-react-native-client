@@ -8,11 +8,6 @@ After the issue is solved, this repository will be updated with working code and
 
 05 April 2021: still no success. Keep on trying
 
-Nats.js and nats-server were built with nats.ws:
-1. ```git clone https://github.com/nats-io/nats.ws.git```
-2. ```npm run build-esm```
-3. ```npm run install-ns```
-
 
 Steps to reproduce:
 1. Run: ```npm install```
@@ -26,3 +21,8 @@ Problems:
 2. Error in wsUrlParseFn - get not implemented - (installed react-native-url-polyfill)
 3. message appears:  reader closed [TypeError: Invalid attemt to iterate non-iterable instance. ...] -> NatsError: DISCONNECT 
 ( nats.js: 2309 )
+
+Nats.js and nats-server were built with nats.ws:
+1. ```git clone https://github.com/nats-io/nats.ws.git```
+2. ```npm run build-esm```
+3. ```npm run install-ns```
