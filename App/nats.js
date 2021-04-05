@@ -2310,9 +2310,9 @@ class ProtocolHandler1 {
                 try {
                     // iterator error 
 
-                    // for await (const b of this.transport){
+                    for await (const b of this.transport){
                         this.parser.parse(this.transport);
-                    // }
+                    }
                 } catch (err) {
                     console.log("reader closed", err);
                 }
