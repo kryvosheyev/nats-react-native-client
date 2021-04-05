@@ -3,29 +3,14 @@ import { connect, JSONCodec } from './nats';
 
 const connectNats = async (config) => {
 
-
-  // websocket creates properly to nats-server
-
-  // const socket = new WebSocket('ws://localhost:9222')
-  // socket.onopen = () => {console.log('connected')};
-
-  // socket.onerror = e => {
-  //   // an error occurred
-  //   console.log(e.message);
-  // };
-  
-  // socket.onclose = e => {
-  //   // connection closed
-  //   console.log(e.code, e.reason);
-  // };
-
-
-  // nats could not connect to nats-server
-
+  // ERROR happens at this line
   const nc = await connect({       
     servers: "ws://localhost:9222",
     ignoreClusterUpdates: true,
   });
+
+  
+  // we never get to this line
   console.log('CONNECTED', nc.getServer())
   const done = nc.closed();
     // do something with the connection
