@@ -24,5 +24,7 @@ Problems:
 
 Nats.js and nats-server were built with nats.ws:
 1. ```git clone https://github.com/nats-io/nats.ws.git```
+
+   // cjs files are not supported in React Native, so we build js file
 2. ```npm run build-esm```
 3. ```npm run install-ns```
