@@ -15,10 +15,11 @@ Nats.js and nats-server were built with nats.ws:
 
 
 Steps to reproduce:
-1. Run:  ```adb reverse tcp:9222 tcp:9222```
-2. Run:  ```./nats-server -c nontls.conf```
-3. Run: ```npm start```
-4. Run android
+1. Run: ```npm install```
+2. Run:  ```adb reverse tcp:9222 tcp:9222```
+3. Run:  ```./nats-server -c nontls.conf```
+4. Run: ```npm start```
+5. Run android
 
 Problems: 
 1. Missing  TextEncoder (installed text-encoding-polyfill)
