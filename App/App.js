@@ -1,3 +1,5 @@
+import 'text-encoding-polyfill';
+import 'react-native-url-polyfill/auto';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
