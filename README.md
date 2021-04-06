@@ -19,8 +19,8 @@ Steps to reproduce:
 Problems: 
 1. Missing  TextEncoder (installed text-encoding-polyfill)
 2. Error in wsUrlParseFn - get not implemented - (installed react-native-url-polyfill)
-3. message appears:  reader closed [TypeError: Invalid attemt to iterate non-iterable instance. ...] -> NatsError: DISCONNECT 
-( nats.js: 2309 )
+3. message appears:  reader closed [TypeError: Invalid attemt to iterate non-iterable instance. ...] (added Symbol.iterator method to ws-transport.ts)
+4. NatsError: TIMEOUT - unsolved
 
 Nats.js and nats-server were built with nats.ws:
 1. ```git clone https://github.com/nats-io/nats.ws.git```
