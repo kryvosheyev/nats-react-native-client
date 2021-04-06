@@ -10,6 +10,7 @@ import connectNats from './connectNats';
 export default function App() {
   useEffect(() => {
     connectNats();
+
   }, [])
 
   return (

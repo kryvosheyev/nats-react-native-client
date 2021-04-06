@@ -1110,6 +1110,7 @@ class SubscriptionImpl1 extends QueuedIteratorImpl {
         this.noIterator = typeof opts1.callback === "function";
         this.closed = deferred1();
         if (opts1.timeout) {
+            console.log('TIMEOUT 1113');
             this.timer = timeout2(opts1.timeout);
             this.timer.then(()=>{
                 this.timer = undefined;
@@ -2233,8 +2234,6 @@ class ProtocolHandler1 {
         this.outbound.reset();
         const pongs = this.pongs;
         this.pongs = [];
-        // console.log('!! pongs:', pongs);
-        // console.log('!! this.pongs:', pongs)
         pongs.forEach((p)=>{
             p.reject(NatsError1.errorForCode(ErrorCode1.Disconnect));
         });
@@ -2298,33 +2297,35 @@ class ProtocolHandler1 {
         const pong = this.prepare();
         let timer;
         try {
+            console.log('timeout 2300');
             timer = timeout2(this.options.timeout || 20000);
             const cp = this.transport.connect(srv, this.options);
-            // console.log('cp:', cp);
-            // console.log('this.transport:', this.transport);
+            console.log('cp', cp);
             await Promise.race([
                 cp,
                 timer
             ]);
+            console.log('race');
             (async ()=>{
                 try {
-                    // iterator error 
-
                     for await (const b of this.transport){
                         this.parser.parse(b);
                     }
                 } catch (err) {
                     console.log("reader closed", err);
                 }
-            })().then();
+            })().then(() => console.log('finished parse'));
         } catch (err) {
+            console.log('err 2319', err);
             pong.reject(err);
         }
         try {
+            console.log('2323')
             await Promise.race([
                 timer,
                 pong
             ]);
+            console.log('2327')
             if (timer) {
                 timer.cancel();
             }
@@ -2715,6 +2716,7 @@ class Request1 {
         this.deferred = deferred1();
         this.token = nuid1.next();
         extend1(this, opts3);
+        console.log('timeout 2714')
         this.timer = timeout2(opts3.timeout);
     }
     resolver(err, msg) {
@@ -3417,7 +3419,7 @@ class JetStreamClientImpl extends BaseApiClient {
         };
         opts.expect = opts.expect ?? {
         };
-        const mh = headers1();
+        const mh = opts?.headers ?? headers1();
         if (opts) {
             if (opts.msgID) {
                 mh.set(PubHeaders.MsgIdHdr, opts.msgID);
@@ -3520,6 +3522,7 @@ class JetStreamClientImpl extends BaseApiClient {
             }
         });
         if (expires) {
+            console.log('timeout 3520');
             timer = timeout2(expires);
             timer.catch(()=>{
                 if (!sub.isClosed()) {
@@ -6576,7 +6579,7 @@ const jetstreamPreview = (()=>{
         }
     };
 })();
-const VERSION = "1.1.0-4";
+const VERSION = "1.1.0";
 const LANG = "nats.ws";
 class WsTransport {
     constructor(){
@@ -6679,6 +6682,9 @@ class WsTransport {
     }
     get isClosed() {
         return this.done;
+    }
+    [Symbol.iterator]() {
+        return this.iterate();
     }
     [Symbol.asyncIterator]() {
         return this.iterate();

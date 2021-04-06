@@ -11,7 +11,7 @@ const connectNats = async (config) => {
   // but if we try to connect using wats.js, it fails
   // ERROR happens at this line
   const nc = await connect({       
-    servers: "ws://localhost:9222",
+    servers: "ws://localhost:9223",
     ignoreClusterUpdates: true,
   });
 
