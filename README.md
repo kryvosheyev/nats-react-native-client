@@ -5,9 +5,9 @@ This repo contains a guide for installing NATS to your React Native project and 
 Client was built with [nats.ws](https://github.com/nats-io/nats.ws).
 
 # Table Of Contents
-1. Installation of nats.ws into your React Native project.
-2. Installation of example App.
-3. Problems we have encountered.
+1. [Installation of nats.ws into your React Native project.](#installation-of-natsws-into-your-react-native-project)
+2. [Installation of example App.](#installation-of-the-example-app)
+3. [Problems we have encountered.](#problems-we-have-encountered)
 
 
 
