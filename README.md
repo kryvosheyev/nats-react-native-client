@@ -68,7 +68,7 @@ Steps to install:
 # install modules
 npm install
 
-# open ports in your android simulator
+# open ports in your android emulator
 adb reverse tcp:9222 tcp:9222
 
 # start nats-server 
