@@ -19,8 +19,7 @@ Steps to reproduce:
 Problems: 
 1. Missing  TextEncoder (installed text-encoding-polyfill)
 2. Error in wsUrlParseFn - get not implemented - (installed react-native-url-polyfill)
-3. message appears:  reader closed [TypeError: Invalid attemt to iterate non-iterable instance. ...] -> NatsError: DISCONNECT 
-( nats.js: 2309 )
+3. message appears:  reader closed [TypeError: Invalid attemt to iterate non-iterable instance. ...] (```npm install --save-dev babel-plugin-transform-async-generator-functions```)
 
 Nats.js and nats-server were built with nats.ws:
 1. ```git clone https://github.com/nats-io/nats.ws.git```
