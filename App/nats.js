@@ -1110,7 +1110,6 @@ class SubscriptionImpl1 extends QueuedIteratorImpl {
         this.noIterator = typeof opts1.callback === "function";
         this.closed = deferred1();
         if (opts1.timeout) {
-            console.log('TIMEOUT 1113');
             this.timer = timeout2(opts1.timeout);
             this.timer.then(()=>{
                 this.timer = undefined;
@@ -2297,35 +2296,39 @@ class ProtocolHandler1 {
         const pong = this.prepare();
         let timer;
         try {
-            console.log('timeout 2300');
             timer = timeout2(this.options.timeout || 20000);
             const cp = this.transport.connect(srv, this.options);
-            console.log('cp', cp);
             await Promise.race([
                 cp,
                 timer
             ]);
-            console.log('race');
             (async ()=>{
                 try {
-                    for await (const b of this.transport){
-                        this.parser.parse(b);
-                    }
+                    for (
+                        let iter = this.transport[Symbol.asyncIterator](), step = await iter.next();
+                        !step.done;
+                        step = await iter.next()
+                      ) {
+                        this.parser.parse(step.value)
+                      }
+
+                    // for await (const b of this.transport){
+                    //     console.log('b', b);
+                    //     console.log('b.length', b.length);
+                    //     this.parser.parse(b);
+                    // }
                 } catch (err) {
                     console.log("reader closed", err);
                 }
-            })().then(() => console.log('finished parse'));
+            })().then();
         } catch (err) {
-            console.log('err 2319', err);
             pong.reject(err);
         }
         try {
-            console.log('2323')
             await Promise.race([
                 timer,
                 pong
             ]);
-            console.log('2327')
             if (timer) {
                 timer.cancel();
             }
@@ -2716,7 +2719,6 @@ class Request1 {
         this.deferred = deferred1();
         this.token = nuid1.next();
         extend1(this, opts3);
-        console.log('timeout 2714')
         this.timer = timeout2(opts3.timeout);
     }
     resolver(err, msg) {
@@ -3522,7 +3524,6 @@ class JetStreamClientImpl extends BaseApiClient {
             }
         });
         if (expires) {
-            console.log('timeout 3520');
             timer = timeout2(expires);
             timer.catch(()=>{
                 if (!sub.isClosed()) {
@@ -6292,12 +6293,27 @@ class NatsConnectionImpl1 {
             const nc7 = new NatsConnectionImpl1(opts);
             ProtocolHandler1.connect(nc7.options, nc7).then((ph1)=>{
                 nc7.protocol = ph1;
+
+
+                
+                const ph1status = ph1.status();
+                
+                
                 (async function() {
-                    for await (const s of ph1.status()){
-                        nc7.listeners.forEach((l1)=>{
-                            l1.push(s);
-                        });
-                    }
+                    for (
+                        let iter = ph1status[Symbol.asyncIterator](), step = await iter.next();
+                        !step.done;
+                        step = await iter.next()
+                      ) {
+                            nc7.listeners.forEach((l1) => {
+                                l1.push(step.value);
+                            });
+                      }
+                    // for await (const s of ph1.status()){
+                    //     nc7.listeners.forEach((l1)=>{
+                    //         l1.push(s);
+                    //     });
+                    // }
                 })();
                 resolve(nc7);
             }).catch((err)=>{
@@ -6667,7 +6683,7 @@ class WsTransport {
         this.closeError = err;
         if (!err) {
             while(!this.socketClosed && this.socket.bufferedAmount > 0){
-                console.log(this.socket.bufferedAmount);
+                // console.log(this.socket.bufferedAmount);
                 await delay1(100);
             }
         }
