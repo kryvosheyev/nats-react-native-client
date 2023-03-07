@@ -38,7 +38,7 @@ npm install  react-native-url-polyfill
 import 'text-encoding-polyfill';
 import 'react-native-url-polyfill/auto';
 ```
-### asyncIterators realisation 
+### asyncIterators implementation 
 ```
 # install babel-plugin-transform-async-generator-functions
 npm install --save-dev babel-plugin-transform-async-generator-functions
